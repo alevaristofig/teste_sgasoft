@@ -5,9 +5,10 @@
     use App\Http\Requests\UsuarioRequest;
     use App\Models\Usuarios;
     use Illuminate\Http\JsonResponse;
+    use Illuminate\Database\Eloquent\Collection;
 
     interface UsuarioRepository {
         
         public function salvar(UsuarioRequest $request): Usuarios;
-        public function listar();
+        public function listar(): Collection;
     }

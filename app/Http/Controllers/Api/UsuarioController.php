@@ -19,9 +19,11 @@ class UsuarioController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        dd('entrou');
+        $result = $this->service->listar();
+
+         return response()->json($result,200);
     }
 
     /**
@@ -39,7 +41,7 @@ class UsuarioController extends Controller
     {
         $result = $this->service->salvar($request);
         
-        return response()->json($result,200);
+        return response()->json($result,201);
     }
 
     /**
