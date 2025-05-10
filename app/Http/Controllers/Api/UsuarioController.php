@@ -47,9 +47,11 @@ class UsuarioController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(int $id): JsonResponse
     {
-        //
+        $result = $this->service->buscar($id);
+
+        return response()->json($result,200);
     }
 
     /**

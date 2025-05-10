@@ -64,4 +64,26 @@ class UsuarioTest extends TestCase
         $this->assertEquals('alevaristofig@gmail.com',$result[0]->email);
         $this->assertEquals('Adriane',$result[1]->nome);
     }
+
+     public function test_BuscarUsuarioSucess(): void {
+
+        $id = 1;
+        $usuario = new Usuarios();
+        $usuario ->nome = "Alexandre";
+        $usuario ->email = "alevaristofig@gmail.com";
+        $usuario ->senha = "12345";
+        $usuario ->status = "1";
+        $usuario ->tipo = "V";
+
+        $mock = Mockery::mock('alias:' . Usuarios::class);
+        $mock->shouldReceive('find')
+            ->once()    
+            ->with($id)        
+            ->andReturn($usuario);
+
+        $result = Usuarios::find($id);
+
+        $this->assertEquals('alevaristofig@gmail.com',$result->email);
+         $this->assertEquals('12345',$result->senha);
+    }
 }

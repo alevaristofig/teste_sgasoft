@@ -31,4 +31,12 @@
                 dd($e);
             }
         }
+
+         public function buscar(int $id): Usuarios {
+            try {
+                return $this->usuario->find($id);
+            } catch(\Exception $e) {
+                dd($e);
+            }
+        }
     }
