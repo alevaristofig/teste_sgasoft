@@ -11,7 +11,7 @@
         
         public function salvar(FornecedorRequest $request): Fornecedor;
         public function listar(): Collection;
-        public function buscar(int $id): Fornecedor;
-        public function atualizar(int $id, UsuarioRequest $request): Fornecedor;
-        public function deletar(int $id): void;
+      //  public function buscar(int $id): Fornecedor;
+     //   public function atualizar(int $id, UsuarioRequest $request): Fornecedor;
+      //  public function deletar(int $id): void;
     }

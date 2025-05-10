@@ -23,7 +23,7 @@ class UsuarioController extends Controller
     {
         $result = $this->service->listar();
 
-         return response()->json($result,200);
+        return response()->json($result,200);
     }
 
     /**
