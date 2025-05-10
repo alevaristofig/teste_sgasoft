@@ -75,8 +75,10 @@ class UsuarioController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id): JsonResponse
     {
-        //
+       $this->service->deletar($id);
+
+       return response()->json(['msg' => "Usuario deletado com sucesso!"],401);
     }
 }

@@ -58,4 +58,14 @@
                 dd($e);
             }
         }
+
+        public function deletar(int $id): void {
+            try {
+                $usuario = $this->usuario->find($id);
+
+                $usuario->delete();
+            } catch(\Exception $e) {
+                dd($e);
+            }
+        }
     }

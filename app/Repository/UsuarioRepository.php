@@ -13,4 +13,5 @@
         public function listar(): Collection;
         public function buscar(int $id): Usuarios;
         public function atualizar(int $id, UsuarioRequest $request): Usuarios;
+        public function deletar(int $id): void;
     }

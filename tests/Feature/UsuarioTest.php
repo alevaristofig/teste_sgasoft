@@ -97,12 +97,6 @@ class UsuarioTest extends TestCase
         $usuario ->status = "1";
         $usuario ->tipo = "A";
 
-        /*$usuarioMock = Mockery::mock('alias:' . Usuarios::class);
-        $usuarioMock->shouldReceive('update')
-            ->once()    
-            ->with($usuario)        
-            ->andReturnTrue();*/
-
         $mock = Mockery::mock('alias:' . Usuarios::class);
         $mock->shouldReceive('find')
             ->once()    
@@ -126,5 +120,33 @@ class UsuarioTest extends TestCase
 
         $this->assertInstanceOf(Usuarios::class,$result);
         $this->assertEquals('Alexandre Evaristo de Figueiredo',$result->nome);        
+    }
+
+     public function test_DeletarUsuarioSucess(): void {
+
+        $id = 1;
+        $usuario = new Usuarios();
+        /*$usuario ->nome = "Alexandre";
+        $usuario ->email = "alevaristofig@gmail.com";
+        $usuario ->senha = "12345";
+        $usuario ->status = "1";
+        $usuario ->tipo = "A";*/
+
+        $mock = Mockery::mock('alias:' . Usuarios::class);
+        $mock->shouldReceive('find')
+            ->once()    
+            ->with($id)        
+            ->andReturn($usuario);
+
+        $usuario = Usuarios::find($id);        
+
+        $mock->shouldReceive('delete')
+            ->once()
+            ->with($id)
+            ->andReturnTrue();
+
+        $result = Usuarios::delete($id);
+       
+        $this->assertTrue($result);                
     }
 }
