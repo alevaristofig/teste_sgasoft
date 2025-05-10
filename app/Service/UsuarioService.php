@@ -32,9 +32,28 @@
             }
         }
 
-         public function buscar(int $id): Usuarios {
+        public function buscar(int $id): Usuarios {
             try {
                 return $this->usuario->find($id);
+            } catch(\Exception $e) {
+                dd($e);
+            }
+        }
+
+         public function atualizar(int $id, UsuarioRequest $request): Usuarios {
+            try {
+                $usuario = $this->usuario->find($id);
+
+                $usuario->nome = $request->nome;
+                $usuario->email = $request->email;
+                $usuario->senha = $request->senha;
+                $usuario->status = $request->status;
+                $usuario->tipo = $request->tipo;
+
+                $usuario->save();
+
+                return $usuario;
+
             } catch(\Exception $e) {
                 dd($e);
             }

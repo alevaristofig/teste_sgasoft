@@ -86,4 +86,45 @@ class UsuarioTest extends TestCase
         $this->assertEquals('alevaristofig@gmail.com',$result->email);
          $this->assertEquals('12345',$result->senha);
     }
+
+    public function test_AtualizarUsuarioSucess(): void {
+
+        $id = 1;
+        $usuario = new Usuarios();
+        $usuario ->nome = "Alexandre";
+        $usuario ->email = "alevaristofig@gmail.com";
+        $usuario ->senha = "12345";
+        $usuario ->status = "1";
+        $usuario ->tipo = "A";
+
+        /*$usuarioMock = Mockery::mock('alias:' . Usuarios::class);
+        $usuarioMock->shouldReceive('update')
+            ->once()    
+            ->with($usuario)        
+            ->andReturnTrue();*/
+
+        $mock = Mockery::mock('alias:' . Usuarios::class);
+        $mock->shouldReceive('find')
+            ->once()    
+            ->with($id)        
+            ->andReturn($usuario);
+
+        $usuarioUpdate = Usuarios::find($id);
+
+        $usuarioUpdate ->nome = "Alexandre Evaristo de Figueiredo";
+        $usuarioUpdate ->email = "alevaristofig@gmail.com.br";
+        $usuarioUpdate ->senha = "1234567";
+        $usuarioUpdate ->status = "1";
+        $usuarioUpdate ->tipo = "A";
+
+        $mock->shouldReceive('create')
+            ->once()
+            ->with($usuarioUpdate)
+            ->andReturn($usuarioUpdate);
+
+        $result = Usuarios::create($usuarioUpdate);
+
+        $this->assertInstanceOf(Usuarios::class,$result);
+        $this->assertEquals('Alexandre Evaristo de Figueiredo',$result->nome);        
+    }
 }

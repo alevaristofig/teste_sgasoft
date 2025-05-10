@@ -12,4 +12,5 @@
         public function salvar(UsuarioRequest $request): Usuarios;
         public function listar(): Collection;
         public function buscar(int $id): Usuarios;
+        public function atualizar(int $id, UsuarioRequest $request): Usuarios;
     }

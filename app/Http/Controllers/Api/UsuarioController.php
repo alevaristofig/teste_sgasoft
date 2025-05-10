@@ -65,9 +65,11 @@ class UsuarioController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
+    public function update(UsuarioRequest $request, int $id): JsonResponse
+    {        
+        $result = $this->service->atualizar($id, $request);
+
+        return response()->json($result,200);
     }
 
     /**
