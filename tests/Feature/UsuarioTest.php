@@ -126,11 +126,6 @@ class UsuarioTest extends TestCase
 
         $id = 1;
         $usuario = new Usuarios();
-        /*$usuario ->nome = "Alexandre";
-        $usuario ->email = "alevaristofig@gmail.com";
-        $usuario ->senha = "12345";
-        $usuario ->status = "1";
-        $usuario ->tipo = "A";*/
 
         $mock = Mockery::mock('alias:' . Usuarios::class);
         $mock->shouldReceive('find')
