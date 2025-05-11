@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\UsuarioController;
 use App\Http\Controllers\Api\FornecedorController;
+use App\Http\Controllers\Api\ProdutoController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -22,5 +23,11 @@ Route::prefix('v1')->group(function() {
         'as' => 'fornecedor'
     ], function() {
         Route::resource('fornecedores',FornecedorController::class);
+    });
+
+    Route::group([
+        'as' => 'produto'
+    ], function() {
+        Route::resource('produtos',ProdutoController::class);
     });
 });
