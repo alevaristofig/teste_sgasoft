@@ -36,27 +36,31 @@
             }
         }
 
-     /*   public function buscar(int $id): Fornecedor {
+        public function buscar(int $id): Fornecedor {
             try {
-                return $this->repository->find($id);
+                return $this->model->find($id);
             } catch(\Exception $e) {
                 dd($e);
             }
         }
 
-        /*public function atualizar(int $id, UsuarioRequest $request): Usuarios {
+        public function atualizar(int $id, FornecedorRequest $request): Fornecedor {
             try {
-                $usuario = $this->usuario->find($id);
+                $fornecedor = $this->model->find($id);
 
-                $usuario->nome = $request->nome;
-                $usuario->email = $request->email;
-                $usuario->senha = $request->senha;
-                $usuario->status = $request->status;
-                $usuario->tipo = $request->tipo;
+                 if($this->validarCnpj($request->cnpj)) {
+                    $fornecedor->nome = $request->nome;
+                    $fornecedor->cnpj = $request->cnpj;
+                    $fornecedor->cep = $request->cep;
+                    $fornecedor->endereco = $request->endereco;
+                    $fornecedor->status = $request->status;
 
-                $usuario->save();
+                    $fornecedor->save();
 
-                return $usuario;
+                    return $fornecedor;                    
+                } else {
+                    throw new \Exception("Cnpj Inválido");
+                }                  
 
             } catch(\Exception $e) {
                 dd($e);
@@ -65,13 +69,13 @@
 
         public function deletar(int $id): void {
             try {
-                $usuario = $this->usuario->find($id);
+                $fornecedor = $this->model->find($id);
 
-                $usuario->delete();
+                $fornecedor->delete();
             } catch(\Exception $e) {
                 dd($e);
             }
-        }*/
+        }
 
         private function validarCnpj(string $cnpj): bool {
             $cnpj = preg_replace('/[^0-9]/', '', (string) $cnpj);

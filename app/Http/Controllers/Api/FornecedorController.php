@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\FornecedorRequest;
 use App\Service\FornecedorService;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class FornecedorController extends Controller
 {
@@ -18,7 +19,7 @@ class FornecedorController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): JsonResponse
     {
         $result = $this->service->listar();
 
@@ -36,7 +37,7 @@ class FornecedorController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(FornecedorRequest $request)
+    public function store(FornecedorRequest $request): JsonResponse
     {
         $result = $this->service->salvar($request);
 
@@ -46,9 +47,11 @@ class FornecedorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(int $id): JsonResponse
     {
-        //
+        $result = $this->service->buscar($id);
+
+        return response()->json($result,200);
     }
 
     /**
@@ -62,16 +65,20 @@ class FornecedorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(FornecedorRequest $request, int $id): JsonResponse
     {
-        //
+        $result = $this->service->atualizar($id, $request);
+
+        return response()->json($result,200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
-        //
+        $this->service->deletar($id);
+
+        return response()->json(['msg' => "Fornecedor deletado com sucesso!"],401);
     }
 }

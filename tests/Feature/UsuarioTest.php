@@ -10,7 +10,7 @@ use App\Models\Usuarios;
 
 class UsuarioTest extends TestCase
 {
-    public function test_InserirUsuarioSucess(): void {
+    public function test_InserirUsuarioSucesso(): void {
 
         $dados = [
             "nome" => "Alexandre",
@@ -32,7 +32,7 @@ class UsuarioTest extends TestCase
         $this->assertEquals('alevaristofig@gmail.com',$result->email);
     }
 
-    public function test_ListarUsuarioSucess(): void {
+    public function test_ListarUsuarioSucesso(): void {
 
         $usuario1 = new Usuarios();
         $usuario1 ->nome = "Alexandre";
@@ -65,7 +65,7 @@ class UsuarioTest extends TestCase
         $this->assertEquals('Adriane',$result[1]->nome);
     }
 
-     public function test_BuscarUsuarioSucess(): void {
+     public function test_BuscarUsuarioSucesso(): void {
 
         $id = 1;
         $usuario = new Usuarios();
@@ -87,7 +87,7 @@ class UsuarioTest extends TestCase
          $this->assertEquals('12345',$result->senha);
     }
 
-    public function test_AtualizarUsuarioSucess(): void {
+    public function test_AtualizarUsuarioSucesso(): void {
 
         $id = 1;
         $usuario = new Usuarios();
@@ -122,7 +122,7 @@ class UsuarioTest extends TestCase
         $this->assertEquals('Alexandre Evaristo de Figueiredo',$result->nome);        
     }
 
-     public function test_DeletarUsuarioSucess(): void {
+     public function test_DeletarUsuarioSucesso(): void {
 
         $id = 1;
         $usuario = new Usuarios();
