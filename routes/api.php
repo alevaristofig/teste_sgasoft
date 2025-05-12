@@ -29,5 +29,6 @@ Route::prefix('v1')->group(function() {
         'as' => 'produto'
     ], function() {
         Route::resource('produtos',ProdutoController::class);
+        Route::post('/produtos/upload',[ProdutoController::class,'upload']);
     });
 });

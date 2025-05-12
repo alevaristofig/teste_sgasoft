@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProdutoRequest;
 use App\Service\ProdutoService;
+use App\Jobs\ProdutoCsvJob;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProdutoController extends Controller
 {
@@ -79,5 +82,17 @@ class ProdutoController extends Controller
         $this->service->deletar($id);
 
         return response()->json(['msg' => "Produto deletado com sucesso!"],401);
+    }
+
+    public function upload(Request $request) {                
+
+        $timestamp = now()->format('Y-m-d-H-i-s');
+        $nomeArquivo = "produto_{$timestamp}.csv";        
+
+        $path = $request->file('produtos')->storeAs('uploads',$nomeArquivo);
+
+        ProdutoCsvJob::dispatch($path);
+
+        return response()->json(['msg' => "Os Produtos estão sendo importados!"],200);
     }
 }
