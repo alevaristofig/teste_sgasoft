@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UsuarioController;
 use App\Http\Controllers\Api\FornecedorController;
 use App\Http\Controllers\Api\ProdutoController;
+use App\Http\Controllers\Api\PedidoController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -30,5 +31,12 @@ Route::prefix('v1')->group(function() {
     ], function() {
         Route::resource('produtos',ProdutoController::class);
         Route::post('/produtos/upload',[ProdutoController::class,'upload']);
+    });
+
+    Route::group([
+        'as' => 'pedido'
+    ], function() {
+        Route::resource('pedidos',PedidoController::class);
+       // Route::post('/produtos/upload',[ProdutoController::class,'upload']);
     });
 });

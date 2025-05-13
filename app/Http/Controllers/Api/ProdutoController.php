@@ -9,7 +9,6 @@ use App\Jobs\ProdutoCsvJob;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Redis;
 
 class ProdutoController extends Controller
 {
@@ -23,12 +22,7 @@ class ProdutoController extends Controller
      * Display a listing of the resource.
      */
     public function index(): JsonResponse
-    {        
-        //Redis::set('nomeTeste','Alexandre');
-        $value = Redis::get('nomeTeste');
-
-        dd($value);
-
+    {                
         $result = $this->service->listar();
 
         return response()->json($result,200);
