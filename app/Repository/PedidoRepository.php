@@ -13,5 +13,5 @@
         public function listar(): Array;
        // public function buscar(int $id): Pedidos;
       //  public function atualizar(int $id, PedidoRequest $request): Pedidos;
-       // public function deletar(int $id): void;
+        public function deletar(int $id): void;
     }
