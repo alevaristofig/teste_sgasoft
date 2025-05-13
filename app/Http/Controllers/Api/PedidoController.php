@@ -53,9 +53,11 @@ class PedidoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(int $id): JsonResponse
     {
-        //
+        $result = $this->service->buscar($id);
+
+        return response()->json($result,200);
     }
 
     /**
@@ -69,9 +71,11 @@ class PedidoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(PedidoRequest $request, int $id): JsonResponse
     {
-        //
+         $result = $this->service->atualizar($id, $request);
+
+        return response()->json($result,200);
     }
 
     /**

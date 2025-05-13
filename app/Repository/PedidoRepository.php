@@ -9,9 +9,10 @@
 
     interface PedidoRepository {
         
+        public function confirmarPedido(): Pedidos;
         public function salvar(PedidoRequest $request): void;
-        public function listar(): Array;
-        public function buscar(int $id): Pedidos;
-      //  public function atualizar(int $id, PedidoRequest $request): Pedidos;
+        public function listar(): Collection;
+        public function buscar(int $id): Pedidos | null;
+        public function atualizar(int $id, PedidoRequest $request): Pedidos | null;
        // public function deletar(int $id): void;
     }

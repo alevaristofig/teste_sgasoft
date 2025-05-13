@@ -17,7 +17,15 @@
             $this->model = $model;
         }
 
-        public function listar(): Array {
+        public function listar(): Collection {
+            try {
+                return $this->model->all();
+            } catch(\Exception $e) {
+                dd($e);
+            }
+        }
+
+        public function listarCarrinho(): Array {
             try {
                 return Redis::hgetall('carrinho:1');
             } catch(\Exception $e) {
@@ -46,5 +54,35 @@
             $pedido = Redis::hgetall('carrinho:1');
 
             return $this->model->create($pedido);
+        }
+
+        public function buscar(int $id): Pedidos | null {
+            try {
+                return $this->model->find($id);
+            } catch(\Exception $e) {
+                dd($e);
+            }
+        }
+
+        public function atualizar(int $id, PedidoRequest $request): Pedidos | null {
+            try {
+                $pedido = $this->model->find($id);
+
+                 if($pedido !== null) {
+                    $pedido->fornecedor_id = $request['fornecedor_id'];
+                    $pedido->data = $request['data'];
+                    $pedido->produtos = json_encode($request['produtos']);
+                    $pedido->valor_total = $request['valor_total'];
+                    $pedido->observacao = $request['observacao'];
+                    $pedido->status = $request['status'];
+
+                    $pedido->save();
+
+                    return $pedido;
+                 }                 
+
+            } catch(\Exception $e) {
+                dd($e);
+            }
         }
     }
