@@ -36,7 +36,7 @@ Route::prefix('v1')->group(function() {
     Route::group([
         'as' => 'pedido'
     ], function() {
-        Route::resource('pedidos',PedidoController::class);
-       // Route::post('/produtos/upload',[ProdutoController::class,'upload']);
+        Route::get('/pedidos/confirmarpedido',[PedidoController::class,'confirmarPedido']);
+        Route::resource('pedidos',PedidoController::class);        
     });
 });

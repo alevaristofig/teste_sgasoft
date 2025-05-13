@@ -44,6 +44,12 @@ class PedidoController extends Controller
         return response()->json(['msg' => 'Produto adicionado no carrinho'],200);
     }
 
+    public function confirmarPedido(): JsonResponse {        
+        $pedido = $this->service->confirmarPedido();
+
+        return response()->json($pedido,200);
+    }
+
     /**
      * Display the specified resource.
      */

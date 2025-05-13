@@ -41,4 +41,10 @@
                 dd($e->getMessage());
             }
         }
+
+        public function confirmarPedido(): Pedidos {            
+            $pedido = Redis::hgetall('carrinho:1');
+
+            return $this->model->create($pedido);
+        }
     }
