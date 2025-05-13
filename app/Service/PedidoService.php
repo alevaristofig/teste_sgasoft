@@ -85,4 +85,14 @@
                 dd($e);
             }
         }
+
+        public function deletar(int $id): void {
+            try {
+                $pedido = $this->model->find($id);
+
+                $pedido->delete();
+            } catch(\Exception $e) {
+                dd($e);
+            }
+        }
     }

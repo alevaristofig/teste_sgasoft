@@ -83,6 +83,8 @@ class PedidoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+         $this->service->deletar($id);
+
+        return response()->json(['msg' => "Pedido deletado com sucesso!"],401);
     }
 }
