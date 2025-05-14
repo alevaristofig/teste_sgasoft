@@ -22,9 +22,9 @@ class UsuarioRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required',
+            'name' => 'required',
             'email' => 'required',
-            'senha' => 'required',
+            'password' => 'required',
             'status' => 'required',
             'tipo' => 'required',
         ];

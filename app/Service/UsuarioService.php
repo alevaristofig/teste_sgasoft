@@ -4,21 +4,24 @@
 
     use App\Repository\UsuarioRepository;
     use App\Http\Requests\UsuarioRequest;
-    use App\Models\Usuarios;
+    use App\Models\User;
     use Illuminate\Http\JsonResponse;
     use Illuminate\Database\Eloquent\Collection;
 
     class UsuarioService implements UsuarioRepository {
 
-        private $usuario;
+        private $user;
 
-        public function __construct(Usuarios $usuarios) {
-            $this->usuario = $usuarios;
+        public function __construct(User $user) {
+            $this->user = $user;
         }
         
-        public function salvar(UsuarioRequest $request): Usuarios {
+        public function salvar(UsuarioRequest $request): User {
             try {
-                return $this->usuario->create($request->all());
+                 $data = $request->all();                 
+                 $data['password'] = bcrypt($data['password']);     
+                             
+                return $this->user->create($data);
             } catch(\Exception $e) {
                 dd($e);
             }
@@ -26,23 +29,23 @@
 
         public function listar(): Collection {
             try {
-                return $this->usuario->all();
+                return $this->user->all();
             } catch(\Exception $e) {
                 dd($e);
             }
         }
 
-        public function buscar(int $id): Usuarios {
+        public function buscar(int $id): User {
             try {
-                return $this->usuario->find($id);
+                return $this->user->find($id);
             } catch(\Exception $e) {
                 dd($e);
             }
         }
 
-         public function atualizar(int $id, UsuarioRequest $request): Usuarios {
+         public function atualizar(int $id, UsuarioRequest $request): User {
             try {
-                $usuario = $this->usuario->find($id);
+                $usuario = $this->user->find($id);
 
                 $usuario->nome = $request->nome;
                 $usuario->email = $request->email;
@@ -61,7 +64,7 @@
 
         public function deletar(int $id): void {
             try {
-                $usuario = $this->usuario->find($id);
+                $usuario = $this->user->find($id);
 
                 $usuario->delete();
             } catch(\Exception $e) {

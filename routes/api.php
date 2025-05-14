@@ -7,12 +7,15 @@ use App\Http\Controllers\Api\UsuarioController;
 use App\Http\Controllers\Api\FornecedorController;
 use App\Http\Controllers\Api\ProdutoController;
 use App\Http\Controllers\Api\PedidoController;
+use App\Http\Controllers\Api\Auth\LoginJwtController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
 Route::prefix('v1')->group(function() {
+
+     Route::post('/autenticacao',[LoginJwtController::class,'login'])->name('login');
 
     Route::group([
         'as' => 'usuario'

@@ -7,6 +7,7 @@
     use App\Models\Produtos;
     use Illuminate\Http\JsonResponse;
     use Illuminate\Database\Eloquent\Collection;
+    use Illuminate\Pagination\LengthAwarePaginator;
 
     class ProdutoService implements ProdutoRepository {
 
@@ -24,9 +25,9 @@
             }
         }
 
-        public function listar(): Collection {
+        public function listar(): LengthAwarePaginator {
             try {
-                return $this->model->all();
+                return $this->model->paginate(10);
             } catch(\Exception $e) {
                 dd($e);
             }
