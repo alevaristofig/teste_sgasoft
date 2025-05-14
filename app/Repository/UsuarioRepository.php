@@ -14,4 +14,5 @@
         public function buscar(int $id): User;
         public function atualizar(int $id, UsuarioRequest $request): User;
         public function deletar(int $id): void;
+        public function buscarUsuarioVendedor(): Collection;
     }

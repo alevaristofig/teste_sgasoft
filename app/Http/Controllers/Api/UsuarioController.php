@@ -81,4 +81,10 @@ class UsuarioController extends Controller
 
        return response()->json(['msg' => "Usuario deletado com sucesso!"],401);
     }
+
+     public function buscarUsuarioVendedor() {
+        $result = $this->service->buscarUsuarioVendedor();
+
+        return response()->json($result,200);
+     }
 }

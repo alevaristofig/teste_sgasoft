@@ -47,9 +47,9 @@
             try {
                 $usuario = $this->user->find($id);
 
-                $usuario->nome = $request->nome;
+                $usuario->name = $request->name;
                 $usuario->email = $request->email;
-                $usuario->senha = $request->senha;
+                $usuario->password = $request->password;
                 $usuario->status = $request->status;
                 $usuario->tipo = $request->tipo;
 
@@ -70,5 +70,9 @@
             } catch(\Exception $e) {
                 dd($e);
             }
+        }
+
+        public function buscarUsuarioVendedor(): Collection {
+            return $this->user->where('tipo','V')->get();            
         }
     }

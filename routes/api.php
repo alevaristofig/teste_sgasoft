@@ -20,6 +20,7 @@ Route::prefix('v1')->group(function() {
     Route::group([
         'as' => 'usuario'
     ], function() {
+        Route::get('usuarios/vendedor',[UsuarioController::class,'buscarUsuarioVendedor']);
         Route::resource('usuarios',UsuarioController::class);
     });
 
