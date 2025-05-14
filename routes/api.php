@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\UsuarioController;
 use App\Http\Controllers\Api\FornecedorController;
 use App\Http\Controllers\Api\ProdutoController;
 use App\Http\Controllers\Api\PedidoController;
+use App\Http\Controllers\Api\UsuarioFornecedorController;
 use App\Http\Controllers\Api\Auth\LoginJwtController;
 
 Route::get('/user', function (Request $request) {
@@ -22,6 +23,12 @@ Route::prefix('v1')->group(function() {
     ], function() {
         Route::get('usuarios/vendedor',[UsuarioController::class,'buscarUsuarioVendedor']);
         Route::resource('usuarios',UsuarioController::class);
+    });
+
+    Route::group([
+        'as' => 'usuariofornecedor'
+    ], function() {
+        Route::post('usuariofornecedor',[UsuarioFornecedorController::class,'salvar']);       
     });
 
     Route::group([
