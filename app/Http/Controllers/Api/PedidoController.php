@@ -87,4 +87,15 @@ class PedidoController extends Controller
 
         return response()->json(['msg' => "Pedido deletado com sucesso!"],401);
     }
+
+    public function listarCarrinho(): JsonResponse
+    {
+        $result = $this->service->listarCarrinho();
+
+        return response()->json($result,200);
+    }
+
+    public function apagarCarrinho() {
+        $this->service->apagarCarrinho();
+    }
 }

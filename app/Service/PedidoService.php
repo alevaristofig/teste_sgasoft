@@ -34,20 +34,27 @@
         }
 
         public function salvar(PedidoRequest $request): void {
-            try {                                
-                                     
-                $pedidos = Redis::get('pedidos');
+            try {                                                                                     
+                $pedidos = Redis::hgetall('carrinho:1');
 
-                if($pedidos === null) {
-                    $dados = $request->all();
-                    $dados['produtos'] = json_encode($dados['produtos']);
+                $dados = $request->all();  
 
-                    Redis::hmset('carrinho:1',$dados);
-                }
+                if($pedidos === null) {                   
+                    $dados['produtos'] = json_encode($dados['produtos']);                  
+                } else {                   
+                    $produtos = Redis::hget('carrinho:1','produtos');                                     
+                    $dados['produtos'] = json_encode(array_merge(json_decode($produtos),$dados['produtos']));                   
+                }  
+                
+                Redis::hmset('carrinho:1',$dados);
                 
             } catch(\Exception $e) {
                 dd($e->getMessage());
             }
+        }
+
+        public function apagarCarrinho() {
+            dd(Redis::del('carrinho:1'));
         }
 
         public function confirmarPedido(): Pedidos {            
