@@ -37,11 +37,12 @@ class PedidoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PedidoRequest $request)
-    {                
-        $this->service->salvar($request);
+    public function store(PedidoRequest $request): bool
+    {             
+        $result = $this->service->salvar($request);
 
         return response()->json(['msg' => 'Produto adicionado no carrinho'],200);
+
     }
 
     public function confirmarPedido(): JsonResponse {        
