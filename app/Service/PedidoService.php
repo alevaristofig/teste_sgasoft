@@ -87,11 +87,13 @@
         }
 
         public function apagarCarrinho() {
-            dd(Redis::del('carrinho:1'));
+            Redis::del('carrinho:1');
         }
 
         public function confirmarPedido(): Pedidos {            
             $pedido = Redis::hgetall('carrinho:1');
+
+            Redis::del('carrinho:1');
 
             return $this->model->create($pedido);
         }
