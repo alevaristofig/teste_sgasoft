@@ -37,11 +37,13 @@ class PedidoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PedidoRequest $request): bool
+    public function store(PedidoRequest $request): JsonResponse
     {             
         $result = $this->service->salvar($request);
 
-        return response()->json(['msg' => 'Produto adicionado no carrinho'],200);
+        return response()->json($result,200);
+
+        //return response()->json(['msg' => 'Produto adicionado no carrinho'],200);
 
     }
 
@@ -98,5 +100,12 @@ class PedidoController extends Controller
 
     public function apagarCarrinho() {
         $this->service->apagarCarrinho();
+    }
+
+    public function retirarItemCarrinho(int $id) {
+       $r = $this->service->retirarItemCarrinho($id);
+
+       // return response()->json(['msg' => "Item retirado do carrinho!"],200);
+       return response()->json($r,200);
     }
 }

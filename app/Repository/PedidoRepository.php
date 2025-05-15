@@ -10,9 +10,10 @@
     interface PedidoRepository {
         
         public function confirmarPedido(): Pedidos;
-        public function salvar(PedidoRequest $request): bool;
+        public function salvar(PedidoRequest $request);
         public function listar(): Collection;
         public function buscar(int $id): Pedidos | null;
         public function atualizar(int $id, PedidoRequest $request): Pedidos | null;
         public function deletar(int $id): void;
+        public function retirarItemCarrinho(int $id);
     }

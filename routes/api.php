@@ -49,6 +49,7 @@ Route::prefix('v1')->group(function() {
     ], function() {
         Route::get('/pedidos/confirmarpedido',[PedidoController::class,'confirmarPedido']);
         Route::get('/pedidos/listarcarrinho',[PedidoController::class,'listarCarrinho']);
+        Route::get('/pedidos/retiraritemcarrinho/{id}',[PedidoController::class,'retirarItemCarrinho']);
         Route::get('/pedidos/apagarCarrinho',[PedidoController::class,'apagarCarrinho']);
         Route::resource('pedidos',PedidoController::class);        
     });
