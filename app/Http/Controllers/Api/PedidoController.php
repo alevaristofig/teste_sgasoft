@@ -72,7 +72,7 @@ class PedidoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PedidoRequest $request, int $id): JsonResponse
+    public function update(Request $request, int $id): JsonResponse
     {
          $result = $this->service->atualizar($id, $request);
 
@@ -86,7 +86,7 @@ class PedidoController extends Controller
     {
          $this->service->deletar($id);
 
-        return response()->json(['msg' => "Pedido deletado com sucesso!"],401);
+        return response()->json(['msg' => "Pedido deletado com sucesso!"],204);
     }
 
     public function listarCarrinho(): JsonResponse

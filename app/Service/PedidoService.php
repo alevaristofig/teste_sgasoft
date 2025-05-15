@@ -4,6 +4,7 @@
 
     use App\Repository\PedidoRepository;
     use App\Http\Requests\PedidoRequest;
+    use Illuminate\Http\Request;
     use App\Models\Pedidos;
     use App\Models\Produtos;
     use Illuminate\Http\JsonResponse;
@@ -119,15 +120,11 @@
             Redis::hmset('carrinho:1','produtos',json_encode($novoElemento));
         }
 
-        public function atualizar(int $id, PedidoRequest $request): Pedidos | null {
+        public function atualizar(int $id, Request $request): Pedidos | null {
             try {
                 $pedido = $this->model->find($id);
 
-                 if($pedido !== null) {
-                    $pedido->fornecedor_id = $request['fornecedor_id'];
-                    $pedido->data = $request['data'];
-                    $pedido->produtos = json_encode($request['produtos']);
-                    $pedido->valor_total = $request['valor_total'];
+                 if($pedido !== null) {                   
                     $pedido->observacao = $request['observacao'];
                     $pedido->status = $request['status'];
 
@@ -152,19 +149,19 @@
         }
 
         private function tranformarObjetoEmArray($produtos) {
-            $indices = ['id','valor','quantidade'];
+            $indices = ['id','valor','quantidade','nome'];
 
             if(isset($produtos->id)) {
                 $produtosCarrinho[] = array(
                     'id' => isset($produtos->id) ? $produtos->id : $produtos['id'],
+                    'nome' => isset($produtos->nome) ? $produtos->nome : $produtos['nome'],
                     'valor' => isset($produtos->valor) ? $produtos->valor : $produtos['valor'],
                     'quantidade' => isset($produtos->quantidade) ? $produtos->quantidade : $produtos['quantidade'],
                 );
             }
-            
-                
-            foreach($produtos AS $key => $prod) { 
-                if(!in_array($key,$indices)) {                    
+                            
+            foreach($produtos AS $key => $prod) {                
+                if(!in_array($key,$indices)) {                                      
                     $produtosCarrinho[] = array(
                         'id' => isset($prod->id) ? $prod->id : $prod['id'],
                         'valor' => isset($prod->valor) ? $prod->valor : $prod['valor'],
