@@ -18,13 +18,21 @@ class LoginJwtController extends Controller
         ])->validate();
 
         if(!$token = auth('api')->attempt($credentials))
-        {
-            $message = new ApiMessages('Unauthorized');
-            return response()->json(['error' => $message->getMessage()], 401); 
+        {            
+            return response()->json(['error' => "Acesso Negado"], 401); 
         }
 
         return response()->json([
             'token' =>$token
+        ]);
+    }
+
+    public function logout()
+    {
+        auth('api')->logout();
+
+        return response()->json([
+            'message' => 'Logout successfully!', 200
         ]);
     }
 }

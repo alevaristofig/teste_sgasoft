@@ -16,10 +16,12 @@ Route::get('/user', function (Request $request) {
 
 Route::prefix('v1')->group(function() {
 
-     Route::post('/autenticacao',[LoginJwtController::class,'login'])->name('login');
+    Route::post('/login',[LoginJwtController::class,'login'])->name('login');
+    Route::get('/logout',[LoginJwtController::class,'logout'])->name('logout');
 
     Route::group([
-        'as' => 'usuario'
+        'as' => 'usuario',
+        'middleware'=> \Tymon\JWTAuth\Http\Middleware\Authenticate::class
     ], function() {
         Route::get('usuarios/vendedor',[UsuarioController::class,'buscarUsuarioVendedor']);
         Route::resource('usuarios',UsuarioController::class);
