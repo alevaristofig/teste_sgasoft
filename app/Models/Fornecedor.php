@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Fornecedor extends Model
 {
@@ -11,4 +12,8 @@ class Fornecedor extends Model
     protected $fillable = [
         'nome', 'cnpj', 'cep', 'endereco', 'status'
     ];
+
+    public function pedidos(): HasMany {
+        return $this->hasMany(Pedidos::class);
+    }
 }

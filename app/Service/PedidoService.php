@@ -22,7 +22,7 @@
 
         public function listar(): Collection {
             try {
-                return $this->model->all();
+               return $this->model->with('fornecedor:id,id,nome')->get();                
             } catch(\Exception $e) {
                 dd($e);
             }
