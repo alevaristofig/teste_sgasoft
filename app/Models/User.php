@@ -50,9 +50,8 @@ class User extends Authenticatable implements JwtSubject
         ];
     }
 
-    public function usuarioFornecerdor(): HasMany
-    {
-        return $this->hasMany(UsuarioFornecedor::class);
+    public function fornecedores(): BelongsToMany {
+        return $this->belongsToMany(Fornecedor::class, 'usuarios_fornecedores');
     }
 
     public function getJWTIdentifier()

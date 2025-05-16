@@ -33,7 +33,7 @@
 
         public function listarCarrinho(): Array {
             try {
-                $carrinho = Redis::hgetall('carrinho:1'); 
+                $carrinho = Redis::hgetall($this->nomeCarrinho); 
                 
                 if (count($carrinho) == 0) {
                     return [];
@@ -70,7 +70,7 @@
             }
         }
 
-        public function salvar(PedidoRequest $request)/*: bool*/ {
+        public function salvar(PedidoRequest $request): bool {
             try {                                                                                                                
                 $pedidos = Redis::hgetall($this->nomeCarrinho);
 
@@ -79,14 +79,14 @@
                 if(count($pedidos) === 0) {                                                     
                     $dados['produtos'] = json_encode($dados['produtos']);                 
                 } else {                                                         
-                    $produtos = Redis::hget('carrinho:1','produtos');                   
+                    $produtos = Redis::hget($this->nomeCarrinho,'produtos');                  
                     $produtosCarrinho =  json_decode($produtos,true);  
                     $produtosCarrinho[] = $dados['produtos'];
 
                     $dados['produtos'] = json_encode($produtosCarrinho);   
                 }  
                 
-                return Redis::hmset($this->nomeCarrinho);
+                return Redis::hmset($this->nomeCarrinho,$dados);
                 
             } catch(\Exception $e) {
                 return $e->getMessage();
@@ -114,8 +114,8 @@
         }
 
         public function retirarItemCarrinho(int $id) {
-            $produtos = Redis::hget('carrinho:1','produtos');                                      
-            $produtosCarrinho =  json_decode($produtos,true); 
+            $produtos = Redis::hget($this->nomeCarrinho,'produtos');                                               
+            $produtosCarrinho =  json_decode($produtos,true);               
             $produtosCarrinho = $this->tranformarObjetoEmArray($produtosCarrinho); 
 
             $novoElemento = array_filter($produtosCarrinho,function($i) use ($id) {
@@ -123,7 +123,7 @@
                 return $i[$indice] != $id;
             });
 
-            Redis::hmset('carrinho:1','produtos',json_encode($novoElemento));
+            Redis::hmset($this->nomeCarrinho,'produtos',json_encode($novoElemento));
         }
 
         public function atualizar(int $id, Request $request): Pedidos | null {
@@ -157,7 +157,7 @@
         private function tranformarObjetoEmArray($produtos) {
             $indices = ['id','valor','quantidade','nome'];
 
-            if(isset($produtos->id)) {
+            if(isset($produtos->id) || array_key_first($produtos) == "id") {
                 $produtosCarrinho[] = array(
                     'id' => isset($produtos->id) ? $produtos->id : $produtos['id'],
                     'nome' => isset($produtos->nome) ? $produtos->nome : $produtos['nome'],
@@ -165,7 +165,7 @@
                     'quantidade' => isset($produtos->quantidade) ? $produtos->quantidade : $produtos['quantidade'],
                 );
             }
-                            
+                           
             foreach($produtos AS $key => $prod) {                
                 if(!in_array($key,$indices)) {                                      
                     $produtosCarrinho[] = array(

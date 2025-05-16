@@ -11,7 +11,7 @@
     interface ProdutoRepository {
         
         public function salvar(ProdutoRequest $request): Produtos;
-        public function listar(): LengthAwarePaginator;
+        public function listar(): Collection;
         public function buscar(int $id): Produtos;
         public function atualizar(int $id, ProdutoRequest $request): Produtos;
         public function deletar(int $id): void;

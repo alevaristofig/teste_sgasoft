@@ -25,9 +25,20 @@
             }
         }
 
-        public function listar(): LengthAwarePaginator {
+        public function listar(): Collection {
             try {
-                return $this->model->paginate(10);
+
+                
+                if(auth('api')->user()->tipo == 'A') {
+                    return $this->model->all();
+                }
+
+                $produto = $this->model->whereHas('fornecedor.fornecedorUsuario', function ($query) {
+                    $query->where('usuario_id', auth('api')->user()->id);
+                })->with(['fornecedor'])->get();
+
+                return $produto;
+                
             } catch(\Exception $e) {
                 dd($e);
             }
