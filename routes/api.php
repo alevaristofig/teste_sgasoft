@@ -23,7 +23,7 @@ Route::prefix('v1')->group(function() {
         'as' => 'usuario',
         'middleware'=> \Tymon\JWTAuth\Http\Middleware\Authenticate::class
     ], function() {
-        Route::get('usuarios/vendedor',[UsuarioController::class,'buscarUsuarioVendedor']);
+        Route::get('usuarios/vendedor',[UsuarioController::class,'buscarUsuarioVendedor']);        
         Route::resource('usuarios',UsuarioController::class);
     });
 
@@ -38,6 +38,7 @@ Route::prefix('v1')->group(function() {
         'as' => 'fornecedor',
         'middleware'=> \Tymon\JWTAuth\Http\Middleware\Authenticate::class
     ], function() {
+        Route::get('fornecedores/{cnpj}/pedidos',[FornecedorController::class,'buscarPedidoFornecedor']);
         Route::resource('fornecedores',FornecedorController::class);
     });
 

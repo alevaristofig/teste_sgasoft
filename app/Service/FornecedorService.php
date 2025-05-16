@@ -5,6 +5,7 @@
     use App\Repository\FornecedorRepository;
     use App\Http\Requests\FornecedorRequest;
     use App\Models\Fornecedor;
+    use App\Models\Pedidos;
     use Illuminate\Http\JsonResponse;
     use Illuminate\Database\Eloquent\Collection;
 
@@ -75,6 +76,16 @@
             } catch(\Exception $e) {
                 dd($e);
             }
+        }
+
+        public function buscarPedidoFornecedor(string $cnpj): Collection {
+            $cnpjFormatado = preg_replace("/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/", "$1.$2.$3/$4-$5", $cnpj);
+  
+            $pedidos =  Pedidos::whereHas('fornecedor', function ($query) use ($cnpjFormatado) {
+                                    $query->where('cnpj', $cnpjFormatado);
+                                 })->get();
+
+            return $pedidos;
         }
 
         private function validarCnpj(string $cnpj): bool {

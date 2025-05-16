@@ -85,4 +85,10 @@ class FornecedorController extends Controller
 
         return response()->json(['msg' => "Fornecedor deletado com sucesso!"],204);
     }
+
+    public function buscarPedidoFornecedor(string $cnpj): JsonResponse {        
+        $pedidos = $this->service->buscarPedidoFornecedor($cnpj);
+
+        return response()->json($pedidos,200);
+    }
 }

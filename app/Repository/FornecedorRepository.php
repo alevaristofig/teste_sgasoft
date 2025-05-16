@@ -14,4 +14,5 @@
         public function buscar(int $id): Fornecedor | null;
         public function atualizar(int $id, FornecedorRequest $request): Fornecedor;
         public function deletar(int $id): void;
+        public function buscarPedidoFornecedor(string $cnpj);
     }
