@@ -16,7 +16,7 @@
             $this->model = $model;
         }
         
-        public function salvar(FornecedorRequest $request): Fornecedor {
+        public function salvar(FornecedorRequest $request): Fornecedor | bool {
             try {                                
                 if($this->validarCnpj($request->cnpj)) {
                     return $this->model->create($request->all());
@@ -24,7 +24,7 @@
                     throw new \Exception("Cnpj Inválido");
                 }                
             } catch(\Exception $e) {
-                dd($e->getMessage());
+                return false;
             }
         }
 
@@ -36,7 +36,7 @@
             }
         }
 
-        public function buscar(int $id): Fornecedor {
+        public function buscar(int $id): Fornecedor | null {
             try {
                 return $this->model->find($id);
             } catch(\Exception $e) {

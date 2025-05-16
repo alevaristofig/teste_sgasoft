@@ -11,4 +11,14 @@ class UsuarioFornecedor extends Model
     protected $fillable = [
         'usuario_id', 'fornecedor_id',
     ];
+
+    public function usuario(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class);
+    }
+
+    public function fornecedor(): BelongsToMany
+    {
+        return $this->belongsToMany(Fornecedor::class);
+    }
 }

@@ -20,19 +20,16 @@ class LoginJwtController extends Controller
         if(!$token = auth('api')->attempt($credentials))
         {            
             return response()->json(['error' => "Acesso Negado"], 401); 
-        }
+        }       
 
         return response()->json([
-            'token' =>$token
-        ]);
+            'token' =>$token,
+            'tipo' => auth('api')->user()->tipo
+        ],200);
     }
 
-    public function logout()
+    public function logout(): void
     {
         auth('api')->logout();
-
-        return response()->json([
-            'message' => 'Logout successfully!', 200
-        ]);
     }
 }

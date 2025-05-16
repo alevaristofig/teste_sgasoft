@@ -12,13 +12,15 @@
     use Illuminate\Support\Facades\Redis;
 
     class PedidoService implements PedidoRepository {
-
+        
         private $model;
         private $produto;
+        private $nomeCarrinho;
 
         public function __construct(Pedidos $model, Produtos $produto) {
             $this->model = $model;
             $this->produto = $produto;
+            $this->nomeCarrinho = 'carrinho:'.auth('api')->user()->email;
         }
 
         public function listar(): Collection {
@@ -29,9 +31,13 @@
             }
         }
 
-        public function listarCarrinho()/*: Array*/ {
+        public function listarCarrinho(): Array {
             try {
-                $carrinho = Redis::hgetall('carrinho:1');                                
+                $carrinho = Redis::hgetall('carrinho:1'); 
+                
+                if (count($carrinho) == 0) {
+                    return [];
+                }
                 $produtos = json_decode($carrinho['produtos']);                 
                
                 $produtosCarrinho = $this->tranformarObjetoEmArray($produtos);
@@ -65,8 +71,8 @@
         }
 
         public function salvar(PedidoRequest $request)/*: bool*/ {
-            try {                                                                                     
-                $pedidos = Redis::hgetall('carrinho:1');
+            try {                                                                                                                
+                $pedidos = Redis::hgetall($this->nomeCarrinho);
 
                 $dados = $request->all();  
 
@@ -80,7 +86,7 @@
                     $dados['produtos'] = json_encode($produtosCarrinho);   
                 }  
                 
-                return Redis::hmset('carrinho:1',$dados);
+                return Redis::hmset($this->nomeCarrinho);
                 
             } catch(\Exception $e) {
                 return $e->getMessage();
@@ -88,13 +94,13 @@
         }
 
         public function apagarCarrinho() {
-            Redis::del('carrinho:1');
+            Redis::del($this->nomeCarrinho);
         }
 
         public function confirmarPedido(): Pedidos {            
-            $pedido = Redis::hgetall('carrinho:1');
+            $pedido = Redis::hgetall($this->nomeCarrinho);
 
-            Redis::del('carrinho:1');
+            Redis::del($this->nomeCarrinho);
 
             return $this->model->create($pedido);
         }

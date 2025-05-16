@@ -7,6 +7,7 @@ use App\Http\Requests\UsuarioRequest;
 use App\Service\UsuarioService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class UsuarioController extends Controller
 {
@@ -20,7 +21,7 @@ class UsuarioController extends Controller
      * Display a listing of the resource.
      */
     public function index(): JsonResponse
-    {
+    {         
         $result = $this->service->listar();
 
         return response()->json($result,200);
@@ -79,7 +80,7 @@ class UsuarioController extends Controller
     {
        $this->service->deletar($id);
 
-       return response()->json(['msg' => "Usuario deletado com sucesso!"],401);
+       return response()->json(['msg' => "Usuario deletado com sucesso!"],204);
     }
 
      public function buscarUsuarioVendedor() {

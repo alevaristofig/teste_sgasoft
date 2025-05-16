@@ -16,4 +16,9 @@ class Fornecedor extends Model
     public function pedidos(): HasMany {
         return $this->hasMany(Pedidos::class);
     }
+
+    public function fornecedorUsuario(): HasMany
+    {
+        return $this->hasMany(UsuarioFornecedor::class);
+    }
 }

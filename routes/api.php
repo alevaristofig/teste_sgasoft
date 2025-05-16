@@ -16,7 +16,7 @@ Route::get('/user', function (Request $request) {
 
 Route::prefix('v1')->group(function() {
 
-    Route::post('/login',[LoginJwtController::class,'login'])->name('login');
+    Route::post('/autenticacao',[LoginJwtController::class,'login'])->name('login');
     Route::get('/logout',[LoginJwtController::class,'logout'])->name('logout');
 
     Route::group([
@@ -28,26 +28,30 @@ Route::prefix('v1')->group(function() {
     });
 
     Route::group([
-        'as' => 'usuariofornecedor'
+        'as' => 'usuariofornecedor',
+        'middleware'=> \Tymon\JWTAuth\Http\Middleware\Authenticate::class
     ], function() {
         Route::post('usuariofornecedor',[UsuarioFornecedorController::class,'salvar']);       
     });
 
     Route::group([
-        'as' => 'fornecedor'
+        'as' => 'fornecedor',
+        'middleware'=> \Tymon\JWTAuth\Http\Middleware\Authenticate::class
     ], function() {
         Route::resource('fornecedores',FornecedorController::class);
     });
 
     Route::group([
         'as' => 'produto'
+        ,'middleware'=> \Tymon\JWTAuth\Http\Middleware\Authenticate::class
     ], function() {
         Route::resource('produtos',ProdutoController::class);
         Route::post('/produtos/upload',[ProdutoController::class,'upload']);
     });
 
     Route::group([
-        'as' => 'pedido'
+        'as' => 'pedido',
+        'middleware'=> \Tymon\JWTAuth\Http\Middleware\Authenticate::class
     ], function() {
         Route::get('/pedidos/confirmarpedido',[PedidoController::class,'confirmarPedido']);
         Route::get('/pedidos/listarcarrinho',[PedidoController::class,'listarCarrinho']);

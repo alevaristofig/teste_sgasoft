@@ -41,6 +41,10 @@ class FornecedorController extends Controller
     {
         $result = $this->service->salvar($request);
 
+        if($result === false) {
+            return response()->json(['msg' => 'Ocorreu um erro e a operação não pode ser realizada'],500);
+        }
+
         return response()->json($result,201);
     }
 
@@ -79,6 +83,6 @@ class FornecedorController extends Controller
     {
         $this->service->deletar($id);
 
-        return response()->json(['msg' => "Fornecedor deletado com sucesso!"],401);
+        return response()->json(['msg' => "Fornecedor deletado com sucesso!"],204);
     }
 }
