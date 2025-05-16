@@ -81,7 +81,7 @@ class ProdutoController extends Controller
     {
         $this->service->deletar($id);
 
-        return response()->json(['msg' => "Produto deletado com sucesso!"],401);
+        return response()->json(['msg' => "Produto deletado com sucesso!"],204);
     }
 
     public function upload(Request $request) {                
