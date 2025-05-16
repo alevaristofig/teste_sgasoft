@@ -81,7 +81,8 @@
         public function buscarPedidoFornecedor(string $cnpj): Collection {
             $cnpjFormatado = preg_replace("/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/", "$1.$2.$3/$4-$5", $cnpj);
   
-            $pedidos =  Pedidos::whereHas('fornecedor', function ($query) use ($cnpjFormatado) {
+            $pedidos =  Pedidos::with(['fornecedor:id,nome'])
+                                ->whereHas('fornecedor', function ($query) use ($cnpjFormatado) {                                   
                                     $query->where('cnpj', $cnpjFormatado);
                                  })->get();
 
